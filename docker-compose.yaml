@@ -1,0 +1,50 @@
+version: "3.9"
+
+networks:
+  my-network:
+    driver: bridge
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pi_app_container
+    depends_on:
+      - db
+      - cache
+    environment:
+      - PORT=8080
+      - DB_HOST=postgres_container
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=pi
+      - REDIS_HOST=redis_container
+      - REDIS_PORT=6379
+    ports:
+      - ${PORT:-8080}:8080
+    restart: unless-stopped
+    command: ["cmd/main"]
+    networks:
+      - my-network
+  db:
+    image: postgres:14-alpine
+    container_name: postgres_container
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=pi
+    ports:
+      - ${POSTGRES_PORT:-5432}:5432
+    restart: unless-stopped
+    networks:
+      - my-network
+  cache:
+    image: redis:6-alpine
+    container_name: redis_container
+    ports:
+      - ${REDIS_PORT:-6379}:6379
+    restart: unless-stopped
+    networks:
+      - my-network

@@ -1,0 +1,180 @@
+basePath: /api/v1
+definitions:
+  dto.BaseErrorResponse:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  dto.BaseResponse:
+    properties:
+      code:
+        type: integer
+    type: object
+  dto.BaseResponseWithData-dto_CreateUserResponse:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.CreateUserResponse'
+    type: object
+  dto.BaseResponseWithData-dto_User:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/dto.User'
+    type: object
+  dto.CreateUserRequest:
+    properties:
+      email:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.CreateUserResponse:
+    properties:
+      id:
+        type: integer
+    type: object
+  dto.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: tanatorn.nateesanprasert@gmail.com
+    name: Tanatorn Nateesanpraser
+  description: This is a pi test API server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: pi test API
+  version: "1.0"
+paths:
+  /user:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: user to create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_CreateUserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      summary: Create new user
+      tags:
+      - User
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      summary: Delete user
+      tags:
+      - User
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponseWithData-dto_User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      summary: Get user by ID
+      tags:
+      - User
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: user to update
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/dto.CreateUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BaseResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/dto.BaseErrorResponse'
+      summary: Update user
+      tags:
+      - User
+swagger: "2.0"
