@@ -14,18 +14,9 @@
 # Dependency directories (remove the comment below to include it)
 vendor/
 
-# Local script folder
-scripts/
-
 .env
 .DS_Store
 
 .vscode
-
-*.json
-
-./postgres-data
-./redis-data
-
 
 **/__debug_bin

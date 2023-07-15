@@ -14,6 +14,10 @@ This application contains 3 main components
 2. application runs on port `8080`
 3. swagger url: `http://localhost:8080/swagger/index.html`
 
+
+Unit test 100% coverage on service level
+![Alt text](samples/unit-test.png)
+
 ### Load testing
 I've also done some load testing on application by using tools like k6, influxDB and grafana
 
