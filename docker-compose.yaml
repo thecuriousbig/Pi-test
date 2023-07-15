@@ -1,8 +1,7 @@
 version: "3.9"
 
 networks:
-  my-network:
-    driver: bridge
+  app-network:
 
 services:
   app:
@@ -27,7 +26,7 @@ services:
     restart: unless-stopped
     command: ["cmd/main"]
     networks:
-      - my-network
+      - app-network
   db:
     image: postgres:14-alpine
     container_name: postgres_container
@@ -39,7 +38,7 @@ services:
       - ${POSTGRES_PORT:-5432}:5432
     restart: unless-stopped
     networks:
-      - my-network
+      - app-network
   cache:
     image: redis:6-alpine
     container_name: redis_container
@@ -47,4 +46,4 @@ services:
       - ${REDIS_PORT:-6379}:6379
     restart: unless-stopped
     networks:
-      - my-network
+      - app-network
